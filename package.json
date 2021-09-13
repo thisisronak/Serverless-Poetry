@@ -1,5 +1,5 @@
 {
-  "name": "social-media-posts-api",
+  "name": "aws-serverless-api",
   "version": "1.0.0",
   "description": "Serverless API with AWS Lambda",
   "main": "handler.ts",

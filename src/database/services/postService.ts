@@ -28,6 +28,17 @@ class PostService {
     return result.Item as Post;
   }
 
+  async getPostByTitle(title: string): Promise<Post[]> {
+    const result = await this.docClient
+      .query({
+        TableName: this.tableName,
+        KeyConditionExpression: title = ":title"
+      })
+      .promise();
+
+    return result.Items as Post[];
+  }
+
   async createPost(post: Post): Promise<Post> {
     await this.docClient
       .put({
