@@ -30,14 +30,39 @@ class PostService {
 
   async getPostByTitle(title: string): Promise<Post[]> {
     const result = await this.docClient
-      .query({
+      .scan({
         TableName: this.tableName,
-        KeyConditionExpression: title = ":title"
+        FilterExpression: '#title = :title',
+        ExpressionAttributeNames: {
+           "#title": "title",
+        },
+        ExpressionAttributeValues: {
+           ":title": title,
+        }
       })
       .promise();
 
     return result.Items as Post[];
   }
+
+  async getPostByTitleAndDescription(title: string, description: string): Promise<Post[]> {
+      const result = await this.docClient
+        .scan({
+          TableName: this.tableName,
+          FilterExpression: '#title = :title and #description = :description' ,
+          ExpressionAttributeNames: {
+             "#title": "title",
+             "#description": "description"
+          },
+          ExpressionAttributeValues: {
+             ":title": title,
+             ":description": description
+          }
+        })
+        .promise();
+
+      return result.Items as Post[];
+    }
 
   async createPost(post: Post): Promise<Post> {
     await this.docClient

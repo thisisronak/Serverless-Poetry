@@ -68,7 +68,14 @@ functions:
       - http:
           method: get
           path: poem/title/{title}
-          cors: true        
+          cors: true
+  getPostByTitleAndDescription:
+    handler: src/functions/getPostByTitleAndDescription.handler
+    events:
+      - http:
+          method: get
+          path: poem/title/{title}/description/{description}
+          cors: true
   updatePost:
     handler: src/functions/updatePost.handler
     events:
